@@ -1,4 +1,7 @@
 package com.neethi.service;
 
-public class AuthService {
+import com.neethi.response.SignupRequest;
+
+public interface AuthService {
+    String createUser(SignupRequest req);
 }
