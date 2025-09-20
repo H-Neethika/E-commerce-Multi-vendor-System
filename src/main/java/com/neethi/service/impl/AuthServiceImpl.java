@@ -4,8 +4,10 @@ import com.neethi.config.JwtProvider;
 import com.neethi.domain.USER_ROLE;
 import com.neethi.modal.Cart;
 import com.neethi.modal.User;
+import com.neethi.modal.VerificationCode;
 import com.neethi.repository.CartRepository;
 import com.neethi.repository.UserRepository;
+import com.neethi.repository.VerificationCodeRepository;
 import com.neethi.response.SignupRequest;
 import com.neethi.service.AuthService;
 import lombok.RequiredArgsConstructor;
@@ -27,9 +29,17 @@ public class AuthServiceImpl implements AuthService {
     private final PasswordEncoder passwordEncoder;
     private final CartRepository cartRepository;
     private final JwtProvider jwtProvider;
+private final VerificationCodeRepository verificationCodeRepository;
 
     @Override
-    public String createUser(SignupRequest req) {
+    public String createUser(SignupRequest req) throws Exception {
+
+        VerificationCode verificationCode=verificationCodeRepository.findByEmail(req.getEmail());
+
+        if(verificationCode==null || !verificationCode.getOtp().equals(req.getOtp())){
+            throw new Exception("wrong OTP...");
+        }
+
         User user = userRepository.findByEmail(req.getEmail());
         if (user == null) {
             User createdUser = new User();
