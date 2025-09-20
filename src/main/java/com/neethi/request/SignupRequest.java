@@ -1,4 +1,4 @@
-package com.neethi.response;
+package com.neethi.request;
 
 import lombok.Data;
 

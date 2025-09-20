@@ -1,12 +1,12 @@
 package com.neethi.controller;
 
 import com.neethi.domain.USER_ROLE;
-import com.neethi.modal.User;
 import com.neethi.modal.VerificationCode;
 import com.neethi.repository.UserRepository;
+import com.neethi.request.LoginRequest;
 import com.neethi.response.ApiResponse;
 import com.neethi.response.AuthResponse;
-import com.neethi.response.SignupRequest;
+import com.neethi.request.SignupRequest;
 import com.neethi.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -31,6 +31,12 @@ public class AuthController {
         res.setMessage("Register Success");
         res.setRole(USER_ROLE.ROLE_CUSTOMER);
         return ResponseEntity.ok(res);
+    }
+
+    @PostMapping("/signin")
+    public ResponseEntity<AuthResponse> loginUserHandler(@RequestBody LoginRequest req) throws Exception {
+        AuthResponse authResponse = authService.signin(req);
+        return ResponseEntity.ok(authResponse);
     }
 
     @PostMapping("/sent/login-signup-otp")
