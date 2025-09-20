@@ -2,7 +2,9 @@ package com.neethi.controller;
 
 import com.neethi.domain.USER_ROLE;
 import com.neethi.modal.User;
+import com.neethi.modal.VerificationCode;
 import com.neethi.repository.UserRepository;
+import com.neethi.response.ApiResponse;
 import com.neethi.response.AuthResponse;
 import com.neethi.response.SignupRequest;
 import com.neethi.service.AuthService;
@@ -22,12 +24,21 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/signup")
-    public ResponseEntity<AuthResponse> createUserHandler(@RequestBody SignupRequest req) {
+    public ResponseEntity<AuthResponse> createUserHandler(@RequestBody SignupRequest req) throws Exception {
         String jwt = authService.createUser(req);
         AuthResponse res = new AuthResponse();
         res.setJwt(jwt);
         res.setMessage("Register Success");
         res.setRole(USER_ROLE.ROLE_CUSTOMER);
+        return ResponseEntity.ok(res);
+    }
+
+    @PostMapping("/sent/login-signup-otp")
+    public ResponseEntity<ApiResponse> sendOtpHandle(@RequestBody VerificationCode verificationCode) throws Exception {
+        authService.sentLoginOtp(verificationCode.getEmail());
+
+        ApiResponse res = new ApiResponse();
+        res.setMessage("otp sent successfully");
         return ResponseEntity.ok(res);
     }
 }
