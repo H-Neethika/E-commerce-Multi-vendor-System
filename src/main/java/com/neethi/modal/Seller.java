@@ -22,25 +22,26 @@ public class Seller {
 
     private String mobile;
 
-    @Column(unique = true,nullable = false)
+    @Column(unique = true, nullable = false)
     private String email;
 
     private String password;
 
     @Embedded
-    private BusinessDetails businessDetails=new BusinessDetails();
+    private BusinessDetails businessDetails = new BusinessDetails();
 
     @Embedded
-    private BankDetails bankDetails=new BankDetails();
+    private BankDetails bankDetails = new BankDetails();
 
     @OneToOne(cascade = CascadeType.ALL)
-    private Address pickupAddress=new Address();
+    private Address pickupAddress = new Address();
 
     private String GSTIN;
 
-    private USER_ROLE role=USER_ROLE.ROLE_SELLER;
+    private USER_ROLE role = USER_ROLE.ROLE_SELLER;
 
-    private AccountStatus accountStatus=AccountStatus.PENDING_VERIFICATION;
+    private AccountStatus accountStatus = AccountStatus.PENDING_VERIFICATION;
 
+    private Boolean emailVerified;
 
 }
