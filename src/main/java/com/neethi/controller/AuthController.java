@@ -3,6 +3,7 @@ package com.neethi.controller;
 import com.neethi.domain.USER_ROLE;
 import com.neethi.modal.VerificationCode;
 import com.neethi.repository.UserRepository;
+import com.neethi.request.LoginOtpRequest;
 import com.neethi.request.LoginRequest;
 import com.neethi.response.ApiResponse;
 import com.neethi.response.AuthResponse;
@@ -40,9 +41,8 @@ public class AuthController {
     }
 
     @PostMapping("/sent/login-signup-otp")
-    public ResponseEntity<ApiResponse> sendOtpHandle(@RequestBody VerificationCode verificationCode) throws Exception {
-        authService.sentLoginOtp(verificationCode.getEmail());
-
+    public ResponseEntity<ApiResponse> sendOtpHandle(@RequestBody LoginOtpRequest req) throws Exception {
+        authService.sentLoginOtp(req.getEmail(), req.getRole());
         ApiResponse res = new ApiResponse();
         res.setMessage("otp sent successfully");
         return ResponseEntity.ok(res);
