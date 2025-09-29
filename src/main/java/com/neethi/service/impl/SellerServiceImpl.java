@@ -3,6 +3,7 @@ package com.neethi.service.impl;
 import com.neethi.config.JwtProvider;
 import com.neethi.domain.AccountStatus;
 import com.neethi.domain.USER_ROLE;
+import com.neethi.exceptions.SellerException;
 import com.neethi.modal.Address;
 import com.neethi.modal.Seller;
 import com.neethi.repository.AddressRepository;
@@ -52,8 +53,8 @@ public class SellerServiceImpl implements SellerService {
     }
 
     @Override
-    public Seller getSellerById(Long id) throws Exception {
-        return sellerRepository.findById(id).orElseThrow(() -> new Exception("Seller not found with id " + id));
+    public Seller getSellerById(Long id) throws SellerException {
+        return sellerRepository.findById(id).orElseThrow(() -> new SellerException("Seller not found with id " + id));
     }
 
     @Override
