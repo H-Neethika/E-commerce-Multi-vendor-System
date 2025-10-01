@@ -71,5 +71,11 @@ public class CartServiceImpl implements CartService {
     }
 
     private int calculateDiscountPercentage(int totalPrice, int totalDiscountedPrice) {
+        if (totalPrice <= 0) {
+            return 0; // avoid divide by zero
+        }
+        int discount = totalPrice - totalDiscountedPrice;
+        return (int) Math.round(((double) discount / totalPrice) * 100);
     }
+
 }
